@@ -1,3 +1,6 @@
+#!/usr/bin/python 
+# -*- coding: utf-8 -*-
+
 # Installation agent Fusioninventory sur serveur Debian
 
 #1. Installation des dépendances utilent à l'éxecution de FusionInventory agent
@@ -8,4 +11,3 @@ download_agentFI()
 
 #3. Installation de l'agent FusionInventory
 dpkg_agentFI()
-
