@@ -1,6 +1,9 @@
 # Définition des Fonctions utilisées par install.py
 
-#1. Iportation du module Python OS pour interagir avec DEBIAN
+#0. Importation de la classe Ansible module 
+from ansible.module_utils.basic import AnsibleModule
+
+#1. Importation du module Python OS pour interagir avec DEBIAN
 import os
 
 #2. Définition fonction install_dependencies
