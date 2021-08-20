@@ -34,7 +34,14 @@ def send_info():
 
 #7. Définition du Module Ansible
 def main():
-	
+	module_args = dict(
+		server_url=dict(type='str', required=True)
+		delay_time=dict(type='int', required=False, default=3600)
+	)
+
+	module = AnsibleModule(argument_spec=module_args)
+	server_url = module.params['server_url']
+	delay_time = module.params['delay_time']
 	
 	install_dependencies()
 	download_agentFI()
