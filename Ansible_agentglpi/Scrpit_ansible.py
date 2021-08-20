@@ -20,8 +20,16 @@ def dpkg_agentFI():
 	os.system("dpkg -i fusioninventory-agent_2.5.2-1_all.deb")
 
 #5. Définition fonction config_agent
-def config_agent():
-	pass
+def config_agent(server_url, delay_time):
+	file = open("/etc/fusioninventory/agent.cfg", "r")
+	lignes = file.readlines()
+	lignes[13] = "server = " + server_url + "\n"
+	lignes[32] = "delaytime = " + str(delay_time) + "\n"
+	file.close()
+	file = open("/etc/fusioninventory/agent.cfg", "w")
+	file.writelines(lignes)
+	file.close()
+
 
 #6. Definition fonction envoie information du systeme:
 def send_info():
