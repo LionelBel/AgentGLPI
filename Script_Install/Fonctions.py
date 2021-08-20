@@ -27,8 +27,8 @@ def config_agent():
 
 #6 Définition de la fonction send_Info :
 def send_info():
-	# Redémarrage du service Fusioninventory-agent
+	# Redémarrage du service Fusioninventory-agent :
 	os.sytem( "systemctl restart fusioninventory-agent.service")
 
-	# Envoi des informations système au serveur cible
+	# Envoi des informations système au serveur cible : 
 	os.system("pkill -USR1 -f -P 1 fusioninventory-agent")
