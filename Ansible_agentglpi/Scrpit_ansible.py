@@ -1,4 +1,8 @@
-# Définition des Fonctions utilisées par install.py
+#!/usr/bin/python 
+# -*- coding: utf-8 -*-
+
+#0. Importation de la classe Ansible module 
+from ansible.module_utils.basic import AnsibleModule
 
 #1. Importation du module Python OS pour interagir avec DEBIAN
 import os
@@ -21,15 +25,28 @@ def dpkg_agentFI():
 	os.system("dpkg -i fusioninventory-agent_2.5.2-1_all.deb")
 
 #5. Définition fonction config_agent
-def config_agent():
-	file = open("/etc/fusioninventory/agent.cfg" , "r")
-	lignes = file.readlines()
-	lignes[13]= "server = http://10.0.1.188/glpi/plugins/fusioninventory/\n"
-	file.close()
-	file = open("/etc/fusioninventory/agent.cfg", "w")
-	file.writelines(lignes)
-	file.close()
+def config_agent(server_url, delay_time):
+	pass
 
-#6 Définition fonction send_Info
+#6. Definition fonction envoie information du systeme
 def send_info():
 	os.system("pkill -USR1 -f -P 1 fusioninventory-agent")
+#7. Définition du Module Ansible
+def main():
+	module_args = dict(
+		server_url=dict(type='str', required=True)
+		delay_time=dict(type='int', required=False, default=3600)
+	)
+
+	module = AnsibleModule(argument_spec=module_args)
+	
+	install_dependencies()
+	download_agentFI()
+	dpkg_agentFI()
+	config_agent(server_url, delay_time)
+	send_info()   
+	reponse = {"result" : "Agent FusionInventoy installé ;)"}                   
+	module.exit_json(changed=False, meta=reponse)
+
+if __name__ == '__main__':
+	main()
