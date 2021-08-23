@@ -21,6 +21,8 @@ def dpkg_agentFI():
 
 #5. Définition fonction config_agent
 def config_agent(server_url, delay_time):
+
+	# Modification du fichier agent.cfg en intégrant les paramètres du module : 
 	file = open("/etc/fusioninventory/agent.cfg", "r")
 	lignes = file.readlines()
 	lignes[13] = "server = " + server_url + "\n"
