@@ -1,6 +1,34 @@
 #!/usr/bin/python 
 # -*- coding: utf-8 -*-
 
+DOCUMENTATION='''
+module: agentglpi
+author: Lionel BELLEROSE
+description: Ce module permet d'installer l'agent fusioninventory et d'envoyer les informations système au serveur cible.
+
+options:
+	server_url:
+		description: inscription de l'adresse ip ou nom de domaine du serveur cible.
+	delay_time:
+		description: détermine le délais de contact avec le serveur de contrôle.
+
+'''
+
+EXEMPLES='''
+- name: Installation agent Fusion inventory
+  agentglpi:
+  	servr_url: http://x.x.x.x/glpi/plugins/fusioninventory/
+  delay_time: 7200 
+
+'''
+
+RETURN='''
+results:
+  description: Installation de lagent Fusioninventory sur le serveur et envoi des infos système.
+
+'''
+
+
 #0. Importation de la classe Ansible module :
 from ansible.module_utils.basic import AnsibleModule
 
@@ -19,7 +47,7 @@ def download_agentFI():
 def dpkg_agentFI():
 	os.system("dpkg -i fusioninventory-agent_2.5.2-1_all.deb")
 
-#5. Définition fonction config_agent
+#5. Définition fonction config_agent :
 def config_agent(server_url, delay_time):
 
 	# Modification du fichier agent.cfg en intégrant les paramètres du module : 
@@ -42,8 +70,10 @@ def send_info():
 	# Envoi des informations système au serveur cible :
 	os.system("pkill -USR1 -f -P 1 fusioninventory-agent")
 
-#7. Définition du Module Ansible
+#7. Définition du Module Ansible :
 def main():
+
+	#Définition des arguments pris en charge par notre module :
 	module_args = dict(
 		server_url=dict(type='str', required=True)
 		delay_time=dict(type='int', required=False, default=3600)
@@ -52,7 +82,8 @@ def main():
 	module = AnsibleModule(argument_spec=module_args)
 	server_url = module.params['server_url']
 	delay_time = module.params['delay_time']
-	
+	###########################################################
+
 	install_dependencies()
 	download_agentFI()
 	dpkg_agentFI()
