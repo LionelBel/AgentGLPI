@@ -4,27 +4,27 @@
 DOCUMENTATION='''
 module: agentglpi
 author: Lionel BELLEROSE
-description: Ce module permet d'installer l'agent fusioninventory et d'envoyer les informations système au serveur cible.
+description: Ce module permet d'installer l'agent FusionInventory et d'envoyer les informations système au serveur cible.
 
 options:
 	server_url:
-		description: inscription de l'adresse ip ou nom de domaine du serveur cible.
+		description: Inscription de l'adresse IP ou nom de domaine du serveur cible.
 	delay_time:
-		description: détermine le délais de contact avec le serveur de contrôle.
+		description: Détermine le délais de contact avec le serveur de contrôle.
 
 '''
 
 EXAMPLES='''
 - name: Installation agent Fusion inventory
   agentglpi:
-  	servr_url: http://x.x.x.x/glpi/plugins/fusioninventory/
+  	server_url: http://x.x.x.x/glpi/plugins/fusioninventory/
   delay_time: 7200 
 
 '''
 
 RETURN='''
 results:
-  description: Installation de lagent Fusioninventory sur le serveur et envoi des infos système.
+  description: Installation de l'agent FusionInventory sur le serveur et envoi des infos système.
 
 '''
 
@@ -61,7 +61,7 @@ def config_agent(server_url, delay_time):
 	file.close()
 
 
-#6. Definition fonction envoie information du systeme:
+#6. Definition fonction envoi information du systeme:
 def send_info():
 
 	# Redémarrage du service Fusioninventory_agent :
