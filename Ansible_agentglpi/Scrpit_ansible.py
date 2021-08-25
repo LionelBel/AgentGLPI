@@ -15,10 +15,10 @@ options:
 '''
 
 EXAMPLES='''
-- name: Installation agent Fusion inventory
+- name: Installation agent FusionInventory
   agentglpi:
   	server_url: http://x.x.x.x/glpi/plugins/fusioninventory/
-  delay_time: 7200 
+    delay_time: 7200 
 
 '''
 
