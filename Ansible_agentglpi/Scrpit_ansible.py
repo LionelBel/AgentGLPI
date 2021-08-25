@@ -14,7 +14,7 @@ options:
 
 '''
 
-EXEMPLES='''
+EXAMPLES='''
 - name: Installation agent Fusion inventory
   agentglpi:
   	servr_url: http://x.x.x.x/glpi/plugins/fusioninventory/
