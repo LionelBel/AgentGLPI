@@ -1,5 +1,5 @@
 #!/usr/bin/python 
-# -*- coding: utf-8 -*-
+#  -*- coding: utf-8 -*-
 
 DOCUMENTATION='''
 module: agentglpi
@@ -20,7 +20,7 @@ EXAMPLES='''
   	server_url: http://x.x.x.x/glpi/plugins/fusioninventory/
     delay_time: 7200 
 
-'''
+'''>
 
 RETURN='''
 results:
@@ -28,26 +28,25 @@ results:
 
 '''
 
-
 #0. Importation de la classe Ansible module :
 from ansible.module_utils.basic import AnsibleModule
 
 #1. Importation du module Python OS pour interagir avec DEBIAN :
 import os
 
-#2. Définition fonction install_dependencies :
+#2. Définition fonction d'installation des dépendances  :
 def install_dependencies():
 	os.system("apt install -y dmidecode hwdata ucf hdparm perl libuniversal-require-perl libwww-perl libparse-edid-perl libproc-daemon-perl libfile-which-perl libhttp-daemon-perl libxml-treepp-perl libyaml-perl libnet-cups-perl libnet-ip-perl libdigest-sha-perl libsocket-getaddrinfo-perl libtext-template-perl libxml-xpath-perl libyaml-tiny-perl")
 
-#3. Définition fonction download_agentFI :
+#3. Définition fonction pour le téléchargement de l'agent FusionInventory :
 def download_agentFI():
 	os.system("wget https://github.com/fusioninventory/fusioninventory-agent/releases/download/2.5.2/fusioninventory-agent_2.5.2-1_all.deb")
 
-#4. Définition fonction dpkg_agentFI :
+#4. Définition fonction pour l'installation de l'agent FusionInventory :
 def dpkg_agentFI():
 	os.system("dpkg -i fusioninventory-agent_2.5.2-1_all.deb")
 
-#5. Définition fonction config_agent :
+#5. Définition configuration de l'agent prenant en charge les arguments du module :
 def config_agent(server_url, delay_time):
 
 	# Modification du fichier agent.cfg en intégrant les paramètres du module : 
@@ -60,17 +59,7 @@ def config_agent(server_url, delay_time):
 	file.writelines(lignes)
 	file.close()
 
-
-#6. Definition fonction envoi information du systeme:
-def send_info():
-
-	# Redémarrage du service Fusioninventory_agent :
-	os.system("systemctl restart fusioninventory-agent.service")
-
-	# Envoi des informations système au serveur cible :
-	os.system("pkill -USR1 -f -P 1 fusioninventory-agent")
-
-#7. Définition du Module Ansible :
+#6. Définition du Module Ansible avec prise en chagre de paramètre :
 def main():
 
 	#Définition des arguments pris en charge par notre module :
@@ -88,7 +77,7 @@ def main():
 	download_agentFI()
 	dpkg_agentFI()
 	config_agent(server_url, delay_time)
-	send_info()   
+
 	reponse = {"result" : "Agent FusionInventoy installé ;)"}                   
 	module.exit_json(changed=False, meta=reponse)
 
