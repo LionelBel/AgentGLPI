@@ -1,0 +1,17 @@
+# Ce fichier est le Ansible playbook nous permettant l'utilisation du module Ansible :
+
+---
+- name: "Téléchargement, installation et configuration de l'agent FusionInventory"
+  hosts: srv-web # node cible
+  tasks:
+    - name: "Installation et configuration agent FusionInventory"
+      agentglpi:
+        server_url: http://srv-glpi.com/glpi/plugins/fusioninventory
+        delay_time: 3600
+
+    - name: "Redémarrage du l'agent FusionInventory"
+      command: systemctl restart fusioninventory-agent.service
+
+    - name: "Envoi des informations système au serveur GlPI"
+      command: pkill -USR1 -f -P 1 fusioninventory-agent
+
